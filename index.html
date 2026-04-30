@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bundeshaushalt 2026 — Interaktives Finanzdiagramm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #f5f3ef;
+    --surface:  #ffffff;
+    --surface2: #f0ede8;
+    --border:   #e0dbd3;
+    --border2:  #ccc7be;
+    --text:     #1a1814;
+    --text2:    #5a5650;
+    --text3:    #9a948e;
+    --accent:   #1a3a2a;
+    --accent2:  #2d6147;
+    --gold:     #b8860b;
+    --gold2:    #f5d87a;
+    --red:      #8b2020;
+    --blue:     #1a3060;
+    --teal:     #0f5e48;
+    --amber:    #8b5e0a;
+    --purple:   #3d2e6e;
+    --coral:    #8b3020;
+    --gray:     #5a5650;
+    --r:        8px;
+    --r2:       12px;
+    --shadow:   0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    --shadow2:  0 2px 8px rgba(0,0,0,.12), 0 8px 32px rgba(0,0,0,.1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:       #141210;
+      --surface:  #1e1c19;
+      --surface2: #262420;
+      --border:   #302e2a;
+      --border2:  #403e3a;
+      --text:     #f0ede8;
+      --text2:    #b0aba4;
+      --text3:    #706c66;
+      --accent:   #4a9e78;
+      --accent2:  #6ec49a;
+      --gold:     #d4a830;
+      --gold2:    #5a440e;
+      --red:      #c05050;
+      --blue:     #4a70c0;
+      --teal:     #3a9e78;
+      --amber:    #c08020;
+      --purple:   #7a60c0;
+      --coral:    #c06050;
+      --gray:     #908c86;
+    }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    gap: 1rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    background: var(--accent);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .logo-mark svg { width: 18px; height: 18px; }
+
+  .logo-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .header-meta {
+    font-size: 12px;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem 2.5rem;
+  }
+
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent2);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: var(--text2);
+    max-width: 600px;
+    margin-bottom: 2rem;
+  }
+
+  /* ── SUMMARY CARDS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .kpi-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 1.1rem 1.25rem;
+    transition: box-shadow .15s, border-color .15s;
+  }
+
+  .kpi-card:hover {
+    box-shadow: var(--shadow);
+    border-color: var(--border2);
+  }
+
+  .kpi-label {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+    margin-bottom: 6px;
+  }
+
+  .kpi-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.9rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 5px;
+  }
+
+  .kpi-value.c-income  { color: var(--teal); }
+  .kpi-value.c-tax     { color: var(--accent2); }
+  .kpi-value.c-debt    { color: var(--blue); }
+  .kpi-value.c-deficit { color: var(--red); }
+
+  .kpi-delta {
+    font-size: 11px;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .kpi-delta .up   { color: var(--teal); }
+  .kpi-delta .down { color: var(--red); }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* ── TABS ── */
+  .tabs-wrap {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 5px;
+    width: fit-content;
+  }
+
+  .tab-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 7px 18px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--text2);
+    transition: all .15s;
+    letter-spacing: 0;
+  }
+
+  .tab-btn:hover { color: var(--text); background: var(--surface2); }
+
+  .tab-btn.active {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 500;
+  }
+
+  /* ── PANELS ── */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── SANKEY SVG ── */
+  .sankey-container {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .sankey-container svg { display: block; width: 100%; }
+
+  /* ── BAR ROWS ── */
+  .bars-container {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }
+
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    border-radius: var(--r);
+    cursor: pointer;
+    transition: background .12s;
+    margin-bottom: 3px;
+  }
+
+  .bar-item:hover { background: var(--surface2); }
+  .bar-item.active { background: var(--surface2); border-left: 2px solid var(--accent2); padding-left: 6px; }
+
+  .bar-label {
+    font-size: 12px;
+    color: var(--text);
+    width: 210px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 12px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width .5s cubic-bezier(.4,0,.2,1);
+  }
+
+  .bar-amount {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    width: 90px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .bar-amount.neg { color: var(--red); }
+
+  /* ── TWO COL MINISTERIEN ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 2rem;
+  }
+
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── DETAIL PANE ── */
+  .detail-pane {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 1rem 1.25rem;
+    margin-top: 1rem;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+    min-height: 56px;
+    transition: background .15s;
+  }
+
+  .detail-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 1rem;
+    font-size: 11px;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    opacity: 0.85;
+  }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    margin-top: 3rem;
+    font-size: 12px;
+    color: var(--text3);
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .site-footer a { color: var(--accent2); text-decoration: none; }
+  .site-footer a:hover { text-decoration: underline; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .main { padding: 1rem; }
+    .hero { padding: 2rem 1rem 1.5rem; }
+    .header-inner { padding: 0; }
+    .cards-grid { grid-template-columns: 1fr 1fr; }
+    .bar-label { width: 130px; }
+    .bar-amount { width: 70px; font-size: 10px; }
+    .tabs-wrap { flex-wrap: wrap; width: 100%; }
+    .tab-btn { flex: 1; text-align: center; padding: 7px 10px; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel.active { animation: fadeUp .2s ease; }
+
+  .bar-fill { width: 0; }
+  .bar-fill.loaded { transition: width .6s cubic-bezier(.4,0,.2,1); }
+
+  /* ── SVG NODE HOVER ── */
+  .snode { cursor: pointer; }
+  .snode rect { transition: opacity .15s; }
+  .snode:hover rect { opacity: 0.85; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-mark">
+        <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="10" width="3" height="6" fill="white" opacity=".9" rx="1"/>
+          <rect x="7" y="6" width="3" height="10" fill="white" opacity=".9" rx="1"/>
+          <rect x="12" y="2" width="3" height="14" fill="white" opacity=".9" rx="1"/>
+        </svg>
+      </div>
+      <span class="logo-text">Bundeshaushalt 2026</span>
+    </a>
+    <span class="header-meta">Entwurf · BMF · Stand August 2025</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Gesamtplan des Bundeshaushaltsplans</p>
+    <h1 class="hero-title">Einnahmen &amp; Ausgaben <em>im Überblick</em></h1>
+    <p class="hero-sub">
+      Interaktive Visualisierung des Bundeshaushalts 2026. Erkunden Sie Einnahmen, Ausgaben
+      und die Mittelverteilung auf alle Einzelpläne — klickbar und filterbar.
+    </p>
+
+    <div class="cards-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Gesamtvolumen</div>
+        <div class="kpi-value c-income">520,5</div>
+        <div class="kpi-delta">Mrd. € · <span class="up">▲ +17,5 ggü. 2025</span></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Steuereinnahmen</div>
+        <div class="kpi-value c-tax">383,8</div>
+        <div class="kpi-delta">Mrd. € · <span class="down">▼ −3,0 ggü. 2025</span></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Nettokreditaufnahme</div>
+        <div class="kpi-value c-debt">89,9</div>
+        <div class="kpi-delta">Mrd. € · <span class="down">▲ +8,1 ggü. 2025</span></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Finanzierungssaldo</div>
+        <div class="kpi-value c-deficit">−99,7</div>
+        <div class="kpi-delta">Mrd. € · strukturelles Defizit</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- TABS -->
+  <div class="tabs-wrap" role="tablist">
+    <button class="tab-btn active" role="tab" aria-selected="true"  onclick="switchTab('overview')">Überblick</button>
+    <button class="tab-btn"        role="tab" aria-selected="false" onclick="switchTab('einnahmen')">Einnahmen</button>
+    <button class="tab-btn"        role="tab" aria-selected="false" onclick="switchTab('ausgaben')">Ausgaben</button>
+    <button class="tab-btn"        role="tab" aria-selected="false" onclick="switchTab('ministerien')">Ministerien</button>
+  </div>
+
+  <!-- ── PANEL: OVERVIEW ── -->
+  <div class="panel active" id="panel-overview">
+    <div class="sankey-container">
+      <svg viewBox="0 0 900 480" role="img" xmlns="http://www.w3.org/2000/svg">
+        <title>Bundeshaushalt 2026 Flussdiagramm</title>
+        <desc>Sankey-ähnliches Flussdiagramm: Einnahmen links, Ausgaben rechts, verbunden durch proportionale Pfade.</desc>
+        <defs>
+          <!-- Gradients for flow paths -->
+          <linearGradient id="g-tax"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#2d6147" stop-opacity=".45"/><stop offset="100%" stop-color="#2d6147" stop-opacity=".1"/></linearGradient>
+          <linearGradient id="g-debt"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1a3060" stop-opacity=".4"/><stop offset="100%" stop-color="#1a3060" stop-opacity=".1"/></linearGradient>
+          <linearGradient id="g-other" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8b5e0a" stop-opacity=".4"/><stop offset="100%" stop-color="#8b5e0a" stop-opacity=".1"/></linearGradient>
+          <!-- Output gradients -->
+          <linearGradient id="g-soc"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8b3020" stop-opacity=".1"/><stop offset="100%" stop-color="#8b3020" stop-opacity=".5"/></linearGradient>
+          <linearGradient id="g-def"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3d2e6e" stop-opacity=".1"/><stop offset="100%" stop-color="#3d2e6e" stop-opacity=".5"/></linearGradient>
+          <linearGradient id="g-inv"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0f5e48" stop-opacity=".1"/><stop offset="100%" stop-color="#0f5e48" stop-opacity=".5"/></linearGradient>
+          <linearGradient id="g-sch"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5a5650" stop-opacity=".1"/><stop offset="100%" stop-color="#5a5650" stop-opacity=".5"/></linearGradient>
+          <linearGradient id="g-fin"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8b5e0a" stop-opacity=".1"/><stop offset="100%" stop-color="#8b5e0a" stop-opacity=".5"/></linearGradient>
+          <linearGradient id="g-more"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1a3060" stop-opacity=".1"/><stop offset="100%" stop-color="#1a3060" stop-opacity=".5"/></linearGradient>
+        </defs>
+
+        <!-- ─ LABELS ─ -->
+        <text x="16" y="24" font-family="'DM Mono',monospace" font-size="10" fill="#9a948e" letter-spacing="1">EINNAHMEN</text>
+        <text x="900" y="24" font-family="'DM Mono',monospace" font-size="10" fill="#9a948e" letter-spacing="1" text-anchor="end">AUSGABEN</text>
+
+        <!-- ─ INCOME BOXES ─ -->
+        <!-- Steuern 383.8 → 73.7% of 460px height → 247px -->
+        <g class="snode" onclick="switchTab('einnahmen')" aria-label="Steuereinnahmen">
+          <rect x="16" y="36" width="160" height="247" rx="8" fill="#2d6147" opacity=".15" stroke="#2d6147" stroke-width="1" stroke-opacity=".4"/>
+          <text x="96" y="144" font-family="'DM Serif Display',serif" font-size="15" fill="#1a3a2a" text-anchor="middle" dominant-baseline="middle">Steuern</text>
+          <text x="96" y="162" font-family="'DM Mono',monospace" font-size="11" fill="#2d6147" text-anchor="middle" dominant-baseline="middle">383,8 Mrd. €</text>
+          <text x="96" y="178" font-family="'DM Mono',monospace" font-size="10" fill="#5a5650" text-anchor="middle" dominant-baseline="middle">73,7 %</text>
+        </g>
+
+        <!-- Kredite 89.9 → 17.3% → 58px -->
+        <g class="snode" onclick="switchTab('einnahmen')" aria-label="Kreditaufnahme">
+          <rect x="16" y="295" width="160" height="80" rx="8" fill="#1a3060" opacity=".12" stroke="#1a3060" stroke-width="1" stroke-opacity=".4"/>
+          <text x="96" y="330" font-family="'DM Serif Display',serif" font-size="15" fill="#1a1814" text-anchor="middle" dominant-baseline="middle">Kredite</text>
+          <text x="96" y="348" font-family="'DM Mono',monospace" font-size="11" fill="#1a3060" text-anchor="middle" dominant-baseline="middle">89,9 Mrd. €</text>
+        </g>
+
+        <!-- Sonstige 46.8 → 9.0% → 40px -->
+        <g class="snode" onclick="switchTab('einnahmen')" aria-label="Sonstige Einnahmen">
+          <rect x="16" y="386" width="160" height="74" rx="8" fill="#8b5e0a" opacity=".12" stroke="#8b5e0a" stroke-width="1" stroke-opacity=".4"/>
+          <text x="96" y="417" font-family="'DM Serif Display',serif" font-size="15" fill="#1a1814" text-anchor="middle" dominant-baseline="middle">Sonstige</text>
+          <text x="96" y="435" font-family="'DM Mono',monospace" font-size="11" fill="#8b5e0a" text-anchor="middle" dominant-baseline="middle">46,8 Mrd. €</text>
+        </g>
+
+        <!-- ─ FLOW PATHS ─ -->
+        <!-- Steuern → center -->
+        <path d="M176 159 C340 159 340 240 504 240" fill="url(#g-tax)" stroke="none"/>
+        <path d="M176 220 C340 220 340 240 504 240" fill="url(#g-tax)" stroke="none" opacity=".3"/>
+
+        <!-- Kredite → center -->
+        <path d="M176 318 C340 318 340 255 504 255" fill="url(#g-debt)" stroke="none"/>
+
+        <!-- Sonstige → center -->
+        <path d="M176 405 C340 405 340 268 504 268" fill="url(#g-other)" stroke="none"/>
+
+        <!-- ─ CENTER NODE ─ -->
+        <rect x="380" y="210" width="140" height="80" rx="10" fill="none" stroke="#ccc7be" stroke-width="1"/>
+        <text x="450" y="242" font-family="'DM Serif Display',serif" font-size="14" fill="#1a1814" text-anchor="middle">Bundeshaushalt</text>
+        <text x="450" y="259" font-family="'DM Mono',monospace" font-size="11" fill="#5a5650" text-anchor="middle">2026</text>
+        <text x="450" y="275" font-family="'DM Mono',monospace" font-size="11" fill="#5a5650" text-anchor="middle">520,5 Mrd. €</text>
+
+        <!-- ─ OUTPUT PATHS ─ -->
+        <!-- Soziales ~38% wide path -->
+        <path d="M520 228 C660 228 660 112 724 112" fill="url(#g-soc)" stroke="none"/>
+        <!-- Verteidigung ~16% -->
+        <path d="M520 242 C660 242 660 190 724 190" fill="url(#g-def)" stroke="none"/>
+        <!-- Investitionen ~11% -->
+        <path d="M520 254 C660 254 660 242 724 242" fill="url(#g-inv)" stroke="none"/>
+        <!-- Bundesschuld ~6.5% -->
+        <path d="M520 262 C660 262 660 284 724 284" fill="url(#g-sch)" stroke="none"/>
+        <!-- Allg. Finanzverwaltung ~9% -->
+        <path d="M520 270 C660 270 660 328 724 328" fill="url(#g-fin)" stroke="none"/>
+        <!-- Weitere Ministerien ~19% -->
+        <path d="M520 280 C660 280 660 396 724 396" fill="url(#g-more)" stroke="none"/>
+
+        <!-- ─ OUTPUT BOXES ─ -->
+        <!-- Soziales 197.4 → 38% → h 114 -->
+        <g class="snode" onclick="switchTab('ausgaben')" aria-label="Soziales">
+          <rect x="724" y="55" width="160" height="114" rx="8" fill="#8b3020" opacity=".13" stroke="#8b3020" stroke-width="1" stroke-opacity=".4"/>
+          <text x="804" y="101" font-family="'DM Serif Display',serif" font-size="15" fill="#1a1814" text-anchor="middle" dominant-baseline="middle">Soziales</text>
+          <text x="804" y="119" font-family="'DM Mono',monospace" font-size="11" fill="#8b3020" text-anchor="middle" dominant-baseline="middle">197,4 Mrd. €</text>
+          <text x="804" y="135" font-family="'DM Mono',monospace" font-size="10" fill="#5a5650" text-anchor="middle" dominant-baseline="middle">Epl. 11 · 37,9 %</text>
+        </g>
+
+        <!-- Verteidigung 82.7 → 16% → h 55 -->
+        <g class="snode" onclick="switchTab('ministerien')" aria-label="Verteidigung">
+          <rect x="724" y="179" width="160" height="55" rx="8" fill="#3d2e6e" opacity=".13" stroke="#3d2e6e" stroke-width="1" stroke-opacity=".4"/>
+          <text x="804" y="200" font-family="'DM Serif Display',serif" font-size="15" fill="#1a1814" text-anchor="middle" dominant-baseline="middle">Verteidigung</text>
+          <text x="804" y="218" font-family="'DM Mono',monospace" font-size="11" fill="#3d2e6e" text-anchor="middle" dominant-baseline="middle">82,7 Mrd. €</text>
+        </g>
+
+        <!-- Investitionen 56.1 → 11% → h 36 -->
+        <g class="snode" onclick="switchTab('ausgaben')" aria-label="Investitionen">
+          <rect x="724" y="244" width="160" height="36" rx="8" fill="#0f5e48" opacity=".13" stroke="#0f5e48" stroke-width="1" stroke-opacity=".4"/>
+          <text x="804" y="260" font-family="'DM Serif Display',serif" font-size="13" fill="#1a1814" text-anchor="middle" dominant-baseline="middle">Investitionen</text>
+          <text x="804" y="274" font-family="'DM Mono',monospace" font-size="10" fill="#0f5e48" text-anchor="middle" dominant-baseline="middle">56,1 Mrd. €</text>
+        </g>
+
+        <!-- Bundesschuld 34.1 → 6.5% → h 30 -->
+        <g class="snode" onclick="switchTab('ausgaben')" aria-label="Bundesschuld">
+          <rect x="724" y="290" width="160" height="30" rx="8" fill="#5a5650" opacity=".13" stroke="#5a5650" stroke-width="1" stroke-opacity=".4"/>
+          <text x="804" y="307" font-family="'DM Mono',monospace" font-size="11" fill="#5a5650" text-anchor="middle" dominant-baseline="middle">Schulden · 34,1 Mrd.</text>
+        </g>
+
+        <!-- Allg. Finanzverwaltung 46.1 → 9% → h 36 -->
+        <g class="snode" onclick="switchTab('ausgaben')" aria-label="Finanzverwaltung">
+          <rect x="724" y="330" width="160" height="36" rx="8" fill="#8b5e0a" opacity=".13" stroke="#8b5e0a" stroke-width="1" stroke-opacity=".4"/>
+          <text x="804" y="346" font-family="'DM Mono',monospace" font-size="11" fill="#8b5e0a" text-anchor="middle" dominant-baseline="middle">Allg. Finanzverwaltung</text>
+          <text x="804" y="360" font-family="'DM Mono',monospace" font-size="10" fill="#5a5650" text-anchor="middle" dominant-baseline="middle">46,1 Mrd. €</text>
+        </g>
+
+        <!-- Weitere Ministerien ~160 → h 58 -->
+        <g class="snode" onclick="switchTab('ministerien')" aria-label="Weitere Ministerien">
+          <rect x="724" y="376" width="160" height="84" rx="8" fill="#1a3060" opacity=".13" stroke="#1a3060" stroke-width="1" stroke-opacity=".4"/>
+          <text x="804" y="410" font-family="'DM Serif Display',serif" font-size="15" fill="#1a1814" text-anchor="middle" dominant-baseline="middle">Weitere Ministerien</text>
+          <text x="804" y="428" font-family="'DM Mono',monospace" font-size="11" fill="#1a3060" text-anchor="middle" dominant-baseline="middle">~104,1 Mrd. €</text>
+          <text x="804" y="444" font-family="'DM Mono',monospace" font-size="10" fill="#5a5650" text-anchor="middle" dominant-baseline="middle">→ Tab Ministerien</text>
+        </g>
+
+        <!-- Hint -->
+        <text x="450" y="470" font-family="'DM Mono',monospace" font-size="10" fill="#9a948e" text-anchor="middle">Klick auf einen Block öffnet das zugehörige Tab</text>
+      </svg>
+    </div>
+
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot" style="background:#2d6147"></span>Steuereinnahmen</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#1a3060"></span>Kreditaufnahme</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#8b5e0a"></span>Sonstige Einnahmen</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#8b3020"></span>Soziales &amp; Arbeit</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#3d2e6e"></span>Verteidigung</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#0f5e48"></span>Investitionen</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#5a5650"></span>Bundesschuld / Zinsen</span>
+    </div>
+  </div>
+
+  <!-- ── PANEL: EINNAHMEN ── -->
+  <div class="panel" id="panel-einnahmen">
+    <div class="bars-container">
+      <div class="section-eyebrow">Einnahmenstruktur 2026 — Gesamteinnahmen: 520,5 Mrd. €</div>
+      <div id="income-bars"></div>
+    </div>
+    <div class="detail-pane" id="income-detail">
+      <div class="detail-title">Einnahmendetails</div>
+      Klicken Sie auf eine Kategorie für mehr Informationen.
+    </div>
+  </div>
+
+  <!-- ── PANEL: AUSGABEN ── -->
+  <div class="panel" id="panel-ausgaben">
+    <div class="bars-container">
+      <div class="section-eyebrow">Ausgabenstruktur 2026 — Gesamtausgaben: 520,5 Mrd. €</div>
+      <div id="expense-bars"></div>
+    </div>
+    <div class="detail-pane" id="expense-detail">
+      <div class="detail-title">Ausgabendetails</div>
+      Klicken Sie auf eine Kategorie für mehr Informationen.
+    </div>
+  </div>
+
+  <!-- ── PANEL: MINISTERIEN ── -->
+  <div class="panel" id="panel-ministerien">
+    <div class="bars-container">
+      <div class="section-eyebrow">Ausgaben nach Einzelplänen 2026 — nach Volumen sortiert</div>
+      <div class="two-col">
+        <div id="min-bars-left"></div>
+        <div id="min-bars-right"></div>
+      </div>
+    </div>
+    <div class="detail-pane" id="min-detail">
+      <div class="detail-title">Ministeriumsdetails</div>
+      Klicken Sie auf ein Ministerium für mehr Informationen.
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <p>
+    Datenquelle: <a href="https://www.bundesfinanzministerium.de" target="_blank" rel="noopener">Bundesministerium der Finanzen</a>
+    · Bundeshaushaltsplan 2026 (Entwurf, Stand August 2025)
+    · Alle Beträge in Milliarden €, gerundet.
+  </p>
+  <p style="margin-top:6px; color: #b0aba4;">
+    Visualisierung · Interaktive Darstellung · Keine Gewähr für Vollständigkeit
+  </p>
+</footer>
+
+<script>
+/* ─────────────────── DATA ─────────────────── */
+const incomeData = [
+  {
+    label: "Steuereinnahmen gesamt", value: 383.8, color: "#2d6147", pct: 73.7,
+    detail: "Gemeinschaftsteuern (Lohn-/Einkommensteuer, Körperschaftsteuer, Umsatzsteuer) 339,6 Mrd. + Bundessteuern 87,3 Mrd. (Energiesteuer, Tabaksteuer, Solidaritätszuschlag) − EU-Eigenmittelabführung 43,1 Mrd."
+  },
+  {
+    label: "  — Gemeinschaftsteuern", value: 339.6, color: "#4a9e78", pct: 65.2,
+    detail: "Lohnsteuer, Einkommensteuer, Körperschaftsteuer, Umsatzsteuer und weitere gemeinschaftliche Steuern. Aufteilung zwischen Bund, Ländern und Gemeinden gemäß Grundgesetz."
+  },
+  {
+    label: "  — Bundessteuern", value: 87.3, color: "#7ab89a", pct: 16.8,
+    detail: "Energiesteuer, Tabaksteuer, Solidaritätszuschlag, Versicherungsteuer, Kraftfahrzeugsteuer u. a. m. Stehen dem Bund allein zu."
+  },
+  {
+    label: "  — EU-Eigenmittel (Abzug)", value: -43.1, color: "#c05050", pct: -8.3,
+    detail: "Deutschland führt EU-Eigenmittel ab: BNE-basierte Eigenmittel, Mehrwertsteuereigenmittel und traditionelle Eigenmittel (Zölle). Abzugsposition."
+  },
+  {
+    label: "Nettokreditaufnahme", value: 89.9, color: "#1a3060", pct: 17.3,
+    detail: "Schuldenaufnahme am Kreditmarkt nach Art. 115 GG. Inkl. Bereichsausnahme Verteidigung & Notlage. Bruttokreditaufnahme: 450,4 Mrd. €; nach Tilgungen (343,6 Mrd.) verbleiben 89,9 Mrd. Netto."
+  },
+  {
+    label: "  — Entnahmen aus Rücklagen", value: 9.7, color: "#4a70c0", pct: 1.9,
+    detail: "Entnahme aus Haushaltsrücklagen zur Mitfinanzierung des strukturellen Defizits. Einmaliger Vorgang im Jahr 2026."
+  },
+  {
+    label: "Verwaltungseinnahmen", value: 23.0, color: "#8b5e0a", pct: 4.4,
+    detail: "Gebühren und Entgelte (16,9 Mrd.), Einnahmen aus wirtschaftlicher Tätigkeit / Beteiligungen (3,9 Mrd., u. a. Bundesbankgewinn), Zinseinnahmen (0,9 Mrd.), Darlehensrückflüsse (0,8 Mrd.)."
+  },
+  {
+    label: "Sonstige Einnahmen", value: 14.0, color: "#c08020", pct: 2.7,
+    detail: "EU-Zuschüsse (10,6 Mrd. — erstmals in dieser Höhe), Schuldendiensthilfen aus dem Ausland (1,7 Mrd.), Beiträge für Investitionen (1,2 Mrd.), sonstige Zuweisungen."
+  }
+];
+
+const expenseData = [
+  {
+    label: "Zuweisungen & Zuschüsse (lfd.)", value: 327.0, color: "#8b3020", pct: 62.8,
+    detail: "Mit Abstand größte Ausgabenkategorie. Enthält alle laufenden Transfers an Sozialversicherungsträger, Länder, Gemeinden und sonstige Bereiche."
+  },
+  {
+    label: "  — Sozialversicherungsträger", value: 155.8, color: "#c05050", pct: 29.9,
+    detail: "Bundeszuschüsse an Rentenversicherung (ca. 110 Mrd.), Krankenversicherung, Pflegeversicherung, Bundesagentur für Arbeit. Größter Einzelposten im Haushalt."
+  },
+  {
+    label: "  — Zuweisungen an Länder", value: 33.7, color: "#d47070", pct: 6.5,
+    detail: "Horizontaler und vertikaler Finanzausgleich, Ergänzungszuweisungen, zweckgebundene Bundesförderprogramme an die Länder."
+  },
+  {
+    label: "  — Sonstige Zuschüsse", value: 122.2, color: "#e09090", pct: 23.5,
+    detail: "Renten und Unterstützungen an natürliche Personen (43,2 Mrd.), Zuschüsse an öffentliche Einrichtungen (28,7 Mrd.), Auslandszuschüsse (18,5 Mrd.), Zuschüsse an private Unternehmen (21,0 Mrd.)."
+  },
+  {
+    label: "Investitionen gesamt", value: 56.1, color: "#0f5e48", pct: 10.8,
+    detail: "Baumaßnahmen (6,2 Mrd.), Zuschüsse für Investitionen an sonstige Bereiche (24,7 Mrd.), Zuweisungen für Investitionen an Länder (9,2 Mrd.), Darlehen an Sozialversicherungsträger (7,6 Mrd.)."
+  },
+  {
+    label: "Personalausgaben", value: 48.5, color: "#3d2e6e", pct: 9.3,
+    detail: "Bezüge Beamte und Richter (11,6 Mrd.), Bezüge Soldaten (11,1 Mrd.), Arbeitnehmerentgelte (7,3 Mrd.), Versorgungsbezüge (9,6 Mrd.), Beihilfen (2,7 Mrd.), globale Personalausgaben (3,5 Mrd.)."
+  },
+  {
+    label: "Militärische Beschaffungen", value: 38.6, color: "#6e5eb0", pct: 7.4,
+    detail: "Wehrforschung und -entwicklung (1,4 Mrd.), Materialerhaltung (12,2 Mrd.), Beschaffung Waffen und Ausrüstung (22,4 Mrd.), militärische Anlagen (2,1 Mrd.). Starker Anstieg durch Sondervermögen Bundeswehr."
+  },
+  {
+    label: "Zinsen (Bundesschuld)", value: 30.2, color: "#5a5650", pct: 5.8,
+    detail: "Zinsausgaben an den inländischen Kreditmarkt (30,1 Mrd.) für aufgenommene Bundesschulden. Strukturelle Belastung, die langfristig den Handlungsspielraum einschränkt."
+  },
+  {
+    label: "Sächliche Verwaltungsausgaben", value: 28.4, color: "#8b7010", pct: 5.5,
+    detail: "Mieten und Pachten (6,2 Mrd.), Geschäftsbedarf und IT (1,6 Mrd.), Unterhaltung Grundstücke und Gebäude (1,4 Mrd.), sonstige Sachausgaben (14,4 Mrd.)."
+  },
+  {
+    label: "Globale Minder-/Mehrausgaben", value: -8.4, color: "#c05050", pct: -1.6,
+    detail: "Haushälterischer Ausgleichsposten: Globale Minderausgaben (−9,4 Mrd.) als Effizienzreserve, abzüglich globaler Mehrausgaben (+1,0 Mrd.). Keine konkreten Einsparungen benannt."
+  }
+];
+
+const ministerienData = [
+  { label: "Arbeit & Soziales (Epl. 11)", value: 197.4, color: "#8b3020", change: "+7,1 Mrd.", detail: "Rentenzuschüsse, ALG II/Bürgergeld, Grundsicherung im Alter, Pflegeversicherungszuschüsse, Eingliederungshilfe. Größter Einzelplan des Bundeshaushalts." },
+  { label: "Verteidigung (Epl. 14)", value: 82.7, color: "#3d2e6e", change: "+20,3 Mrd.", detail: "Größter absoluter Anstieg 2026. Personal (24,7 Mrd.) + militärische Beschaffungen (38,5 Mrd.) + sonstige Ausgaben. NATO-Sondervermögen wirkt." },
+  { label: "Allg. Finanzverwaltung (Epl. 60)", value: 46.1, color: "#8b5e0a", change: "−1,2 Mrd.", detail: "EU-Eigenmittelabführung, Steuerverbund mit Ländern und Gemeinden, allgemeine Bundesfinanzen, globale Positionen. Enthält auch Ukraine-Hilfsmittel." },
+  { label: "Bundesschuld (Epl. 32)", value: 34.1, color: "#5a5650", change: "−0,1 Mrd.", detail: "Zinszahlungen (30,2 Mrd.) und Tilgungsanteile (3,8 Mrd.). Strukturell durch historisch hohe Schulden belastet. Zinsen allein entsprechen ~5,8 % der Ausgaben." },
+  { label: "Forschung & Raumfahrt (Epl. 30)", value: 21.3, color: "#0f5e48", change: "−1,1 Mrd.", detail: "Förderung Wissenschaft und Hochschulen, Raumfahrt (DLR), Quantencomputing, KI-Forschung, Helmholtz-Gemeinschaft, Max-Planck-Gesellschaft." },
+  { label: "Gesundheit (Epl. 15)", value: 20.1, color: "#1a5e3a", change: "+0,8 Mrd.", detail: "Zuschüsse an GKV (Krankenversicherung der Rentner, ca. 15 Mrd.), Pflegeversicherung, Pandemievorsorge, Bundeszentrale für gesundheitliche Aufklärung." },
+  { label: "Verkehr (Epl. 12)", value: 28.2, color: "#3b6d11", change: "−10,0 Mrd.", detail: "Autobahn GmbH, Bahn-Eigenkapitalzuführung (Sonderprogramm), Bundesstraßen, Wasserstraßen und Häfen. Starker Rückgang nach Sondereffekten 2025." },
+  { label: "Finanzen (Epl. 08)", value: 10.8, color: "#2d5e20", change: "+0,2 Mrd.", detail: "Zollverwaltung, Bundeszentralamt für Steuern, IT-Konsolidierung Bund, Versorgungsrücklage, Bundesanstalt für Immobilienaufgaben." },
+  { label: "Wirtschaft & Energie (Epl. 09)", value: 8.0, color: "#1a3060", change: "−1,0 Mrd.", detail: "Mittelstandsförderung, Exportkreditgarantien (Hermes), Energie- und Klimainvestitionen, Bürgschaften, Außenwirtschaftsförderung." },
+  { label: "Entw.-zusammenarbeit (Epl. 23)", value: 9.9, color: "#639922", change: "−0,3 Mrd.", detail: "ODA-Leistungen, GIZ (Gesellschaft für Internationale Zusammenarbeit), KfW Entwicklungsbank, Beiträge an Weltbank, UN-Fonds, bilaterale Entwicklungshilfe." },
+  { label: "Bildung & Jugend (Epl. 17)", value: 14.7, color: "#9f8020", change: "+0,5 Mrd.", detail: "BAföG, Kita-Ausbau (Sondervermögen), Forschungsförderung, Jugend- und Familienpolitik, Bundesjugendplan." },
+  { label: "Wohnen & Bauen (Epl. 25)", value: 7.6, color: "#185FA5", change: "+0,2 Mrd.", detail: "Sozialer Wohnungsbau, Stadtentwicklung und Sanierung, Bundesbauten, Wohngeldzuschüsse, Bauforschung." },
+  { label: "Innenministerium (Epl. 06)", value: 16.0, color: "#888780", change: "+0,8 Mrd.", detail: "Polizei (Bundespolizei, BKA), Verfassungsschutz, Migrationsverwaltung (BAMF), Zivil- und Katastrophenschutz, IT-Sicherheit (BSI)." },
+  { label: "Landwirtschaft & Heimat (Epl. 10)", value: 7.0, color: "#97C459", change: "+0,1 Mrd.", detail: "EU-Direktzahlungen und Agrarmarktmaßnahmen, ländliche Entwicklung, Ernährungsforschung, Heimatförderung (neue Zuständigkeit)." },
+  { label: "Auswärtiges Amt (Epl. 05)", value: 6.1, color: "#27500A", change: "+0,1 Mrd.", detail: "Auslandsvertretungen, humanitäre Hilfe und Krisenprävention, auswärtige Kulturpolitik (Goethe-Institut, DAAD), EU-Außenpolitik." },
+];
+
+/* ─────────────────── RENDER FUNCTIONS ─────────────────── */
+
+function fmt(v) { return Math.abs(v).toFixed(1) + ' Mrd.'; }
+
+function buildBars(data, containerId, detailId) {
+  const max = Math.max(...data.map(d => Math.abs(d.value)));
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+
+  data.forEach(d => {
+    const pct = Math.round(Math.abs(d.value) / max * 100);
+    const isNeg = d.value < 0;
+    const item = document.createElement('div');
+    item.className = 'bar-item';
+    item.innerHTML = `
+      <div class="bar-label" title="${d.label}">${d.label}</div>
+      <div class="bar-track">
+        <div class="bar-fill" data-w="${pct}" style="width:0%;background:${d.color};opacity:${isNeg ? 0.5 : 0.8}"></div>
+      </div>
+      <div class="bar-amount ${isNeg ? 'neg' : ''}">${isNeg ? '−' : ''}${fmt(d.value)}</div>
+    `;
+    item.addEventListener('click', () => {
+      container.querySelectorAll('.bar-item').forEach(el => el.classList.remove('active'));
+      item.classList.add('active');
+      const dp = document.getElementById(detailId);
+      dp.innerHTML = `<div class="detail-title">${d.label.trim()}</div>${d.detail || ''}`;
+    });
+    container.appendChild(item);
+  });
+
+  // animate bars
+  requestAnimationFrame(() => {
+    container.querySelectorAll('.bar-fill').forEach(fill => {
+      const w = fill.dataset.w;
+      fill.classList.add('loaded');
+      fill.style.width = w + '%';
+    });
+  });
+}
+
+function buildMinBars() {
+  const sorted = [...ministerienData].sort((a, b) => b.value - a.value);
+  const max = Math.max(...sorted.map(d => d.value));
+  const half = Math.ceil(sorted.length / 2);
+
+  function renderSide(data, id) {
+    const c = document.getElementById(id);
+    c.innerHTML = '';
+    data.forEach(d => {
+      const pct = Math.round(d.value / max * 100);
+      const isUp = d.change.startsWith('+');
+      const isDown = d.change.startsWith('−');
+      const signColor = isUp ? '#0f5e48' : isDown ? '#8b2020' : '#5a5650';
+      const item = document.createElement('div');
+      item.className = 'bar-item';
+      item.innerHTML = `
+        <div class="bar-label" style="width:180px" title="${d.label}">${d.label}</div>
+        <div class="bar-track">
+          <div class="bar-fill" data-w="${pct}" style="width:0%;background:${d.color};opacity:0.75"></div>
+        </div>
+        <div class="bar-amount" style="width:110px">
+          ${fmt(d.value)}
+          <span style="font-size:10px;color:${signColor};margin-left:4px">${d.change}</span>
+        </div>
+      `;
+      item.addEventListener('click', () => {
+        document.querySelectorAll('#min-bars-left .bar-item, #min-bars-right .bar-item').forEach(el => el.classList.remove('active'));
+        item.classList.add('active');
+        document.getElementById('min-detail').innerHTML =
+          `<div class="detail-title">${d.label.trim()}</div>${d.detail || ''}`;
+      });
+      c.appendChild(item);
+    });
+    requestAnimationFrame(() => {
+      c.querySelectorAll('.bar-fill').forEach(fill => {
+        fill.classList.add('loaded');
+        fill.style.width = fill.dataset.w + '%';
+      });
+    });
+  }
+
+  renderSide(sorted.slice(0, half), 'min-bars-left');
+  renderSide(sorted.slice(half), 'min-bars-right');
+}
+
+/* ─────────────────── TAB SWITCHING ─────────────────── */
+const panels = { overview: null, einnahmen: null, ausgaben: null, ministerien: null };
+let builtPanels = { overview: true, einnahmen: false, ausgaben: false, ministerien: false };
+
+function switchTab(tab) {
+  // Update tabs
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    const tabs = ['overview', 'einnahmen', 'ausgaben', 'ministerien'];
+    btn.classList.toggle('active', tabs[i] === tab);
+    btn.setAttribute('aria-selected', tabs[i] === tab ? 'true' : 'false');
+  });
+
+  // Update panels
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+
+  // Lazy-build bar panels
+  if (tab === 'einnahmen' && !builtPanels.einnahmen) {
+    buildBars(incomeData, 'income-bars', 'income-detail');
+    builtPanels.einnahmen = true;
+  }
+  if (tab === 'ausgaben' && !builtPanels.ausgaben) {
+    buildBars(expenseData, 'expense-bars', 'expense-detail');
+    builtPanels.ausgaben = true;
+  }
+  if (tab === 'ministerien' && !builtPanels.ministerien) {
+    buildMinBars();
+    builtPanels.ministerien = true;
+  }
+}
+
+/* ─────────────────── INIT ─────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  // nothing to pre-build; overview is SVG-only
+});
+</script>
+</body>
+</html>
