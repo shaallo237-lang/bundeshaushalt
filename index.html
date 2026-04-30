@@ -513,16 +513,16 @@
         <desc>Sankey-ähnliches Flussdiagramm: Einnahmen links, Ausgaben rechts, verbunden durch proportionale Pfade.</desc>
         <defs>
           <!-- Gradients for flow paths -->
-          <linearGradient id="g-tax"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#2d6147" stop-opacity=".45"/><stop offset="100%" stop-color="#2d6147" stop-opacity=".1"/></linearGradient>
-          <linearGradient id="g-debt"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1a3060" stop-opacity=".4"/><stop offset="100%" stop-color="#1a3060" stop-opacity=".1"/></linearGradient>
-          <linearGradient id="g-other" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8b5e0a" stop-opacity=".4"/><stop offset="100%" stop-color="#8b5e0a" stop-opacity=".1"/></linearGradient>
+          <linearGradient id="g-tax"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#2d6147" stop-opacity=".85"/><stop offset="100%" stop-color="#2d6147" stop-opacity=".45"/></linearGradient>
+          <linearGradient id="g-debt"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1a3060" stop-opacity=".8"/><stop offset="100%" stop-color="#1a3060" stop-opacity=".4"/></linearGradient>
+          <linearGradient id="g-other" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8b5e0a" stop-opacity=".8"/><stop offset="100%" stop-color="#8b5e0a" stop-opacity=".4"/></linearGradient>
           <!-- Output gradients -->
-          <linearGradient id="g-soc"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8b3020" stop-opacity=".1"/><stop offset="100%" stop-color="#8b3020" stop-opacity=".5"/></linearGradient>
-          <linearGradient id="g-def"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3d2e6e" stop-opacity=".1"/><stop offset="100%" stop-color="#3d2e6e" stop-opacity=".5"/></linearGradient>
-          <linearGradient id="g-inv"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0f5e48" stop-opacity=".1"/><stop offset="100%" stop-color="#0f5e48" stop-opacity=".5"/></linearGradient>
-          <linearGradient id="g-sch"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5a5650" stop-opacity=".1"/><stop offset="100%" stop-color="#5a5650" stop-opacity=".5"/></linearGradient>
-          <linearGradient id="g-fin"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8b5e0a" stop-opacity=".1"/><stop offset="100%" stop-color="#8b5e0a" stop-opacity=".5"/></linearGradient>
-          <linearGradient id="g-more"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1a3060" stop-opacity=".1"/><stop offset="100%" stop-color="#1a3060" stop-opacity=".5"/></linearGradient>
+          <linearGradient id="g-soc"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8b3020" stop-opacity=".45"/><stop offset="100%" stop-color="#8b3020" stop-opacity=".85"/></linearGradient>
+          <linearGradient id="g-def"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#3d2e6e" stop-opacity=".45"/><stop offset="100%" stop-color="#3d2e6e" stop-opacity=".85"/></linearGradient>
+          <linearGradient id="g-inv"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0f5e48" stop-opacity=".45"/><stop offset="100%" stop-color="#0f5e48" stop-opacity=".85"/></linearGradient>
+          <linearGradient id="g-sch"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#5a5650" stop-opacity=".45"/><stop offset="100%" stop-color="#5a5650" stop-opacity=".85"/></linearGradient>
+          <linearGradient id="g-fin"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8b5e0a" stop-opacity=".45"/><stop offset="100%" stop-color="#8b5e0a" stop-opacity=".85"/></linearGradient>
+          <linearGradient id="g-more"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1a3060" stop-opacity=".45"/><stop offset="100%" stop-color="#1a3060" stop-opacity=".85"/></linearGradient>
         </defs>
 
         <!-- ─ LABELS ─ -->
@@ -532,24 +532,24 @@
         <!-- ─ INCOME BOXES ─ -->
         <!-- Steuern 383.8 → 73.7% of 460px height → 247px -->
         <g class="snode" onclick="switchTab('einnahmen')" aria-label="Steuereinnahmen">
-          <rect x="16" y="36" width="160" height="247" rx="8" fill="#2d6147" opacity=".15" stroke="#2d6147" stroke-width="1" stroke-opacity=".4"/>
-          <text x="96" y="144" font-family="'DM Serif Display',serif" font-size="15" fill="#1a3a2a" text-anchor="middle" dominant-baseline="middle">Steuern</text>
-          <text x="96" y="162" font-family="'DM Mono',monospace" font-size="11" fill="#2d6147" text-anchor="middle" dominant-baseline="middle">383,8 Mrd. €</text>
-          <text x="96" y="178" font-family="'DM Mono',monospace" font-size="10" fill="#5a5650" text-anchor="middle" dominant-baseline="middle">73,7 %</text>
+          <rect x="16" y="36" width="160" height="247" rx="8" fill="#2d6147" opacity=".82" stroke="#1a3a2a" stroke-width="1.5" stroke-opacity="1"/>
+          <text x="96" y="144" font-family="'DM Serif Display',serif" font-size="16" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">Steuern</text>
+          <text x="96" y="162" font-family="'DM Mono',monospace" font-size="12" fill="#d0f0e4" text-anchor="middle" dominant-baseline="middle">383,8 Mrd. €</text>
+          <text x="96" y="179" font-family="'DM Mono',monospace" font-size="11" fill="#a0d8c0" text-anchor="middle" dominant-baseline="middle">73,7 %</text>
         </g>
 
         <!-- Kredite 89.9 → 17.3% → 58px -->
         <g class="snode" onclick="switchTab('einnahmen')" aria-label="Kreditaufnahme">
-          <rect x="16" y="295" width="160" height="80" rx="8" fill="#1a3060" opacity=".12" stroke="#1a3060" stroke-width="1" stroke-opacity=".4"/>
-          <text x="96" y="330" font-family="'DM Serif Display',serif" font-size="15" fill="#1a1814" text-anchor="middle" dominant-baseline="middle">Kredite</text>
-          <text x="96" y="348" font-family="'DM Mono',monospace" font-size="11" fill="#1a3060" text-anchor="middle" dominant-baseline="middle">89,9 Mrd. €</text>
+          <rect x="16" y="295" width="160" height="80" rx="8" fill="#1a3060" opacity=".82" stroke="#0e1e40" stroke-width="1.5" stroke-opacity="1"/>
+          <text x="96" y="330" font-family="'DM Serif Display',serif" font-size="16" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">Kredite</text>
+          <text x="96" y="349" font-family="'DM Mono',monospace" font-size="12" fill="#b0c8f0" text-anchor="middle" dominant-baseline="middle">89,9 Mrd. €</text>
         </g>
 
         <!-- Sonstige 46.8 → 9.0% → 40px -->
         <g class="snode" onclick="switchTab('einnahmen')" aria-label="Sonstige Einnahmen">
-          <rect x="16" y="386" width="160" height="74" rx="8" fill="#8b5e0a" opacity=".12" stroke="#8b5e0a" stroke-width="1" stroke-opacity=".4"/>
-          <text x="96" y="417" font-family="'DM Serif Display',serif" font-size="15" fill="#1a1814" text-anchor="middle" dominant-baseline="middle">Sonstige</text>
-          <text x="96" y="435" font-family="'DM Mono',monospace" font-size="11" fill="#8b5e0a" text-anchor="middle" dominant-baseline="middle">46,8 Mrd. €</text>
+          <rect x="16" y="386" width="160" height="74" rx="8" fill="#8b5e0a" opacity=".82" stroke="#5a3c06" stroke-width="1.5" stroke-opacity="1"/>
+          <text x="96" y="417" font-family="'DM Serif Display',serif" font-size="16" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">Sonstige</text>
+          <text x="96" y="436" font-family="'DM Mono',monospace" font-size="12" fill="#f5d87a" text-anchor="middle" dominant-baseline="middle">46,8 Mrd. €</text>
         </g>
 
         <!-- ─ FLOW PATHS ─ -->
@@ -564,10 +564,10 @@
         <path d="M176 405 C340 405 340 268 504 268" fill="url(#g-other)" stroke="none"/>
 
         <!-- ─ CENTER NODE ─ -->
-        <rect x="380" y="210" width="140" height="80" rx="10" fill="none" stroke="#ccc7be" stroke-width="1"/>
+        <rect x="380" y="210" width="140" height="80" rx="10" fill="#f5f3ef" stroke="#1a1814" stroke-width="1.5" stroke-opacity=".6"/>
         <text x="450" y="242" font-family="'DM Serif Display',serif" font-size="14" fill="#1a1814" text-anchor="middle">Bundeshaushalt</text>
         <text x="450" y="259" font-family="'DM Mono',monospace" font-size="11" fill="#5a5650" text-anchor="middle">2026</text>
-        <text x="450" y="275" font-family="'DM Mono',monospace" font-size="11" fill="#5a5650" text-anchor="middle">520,5 Mrd. €</text>
+        <text x="450" y="275" font-family="'DM Mono',monospace" font-size="11" fill="#1a3a2a" text-anchor="middle" font-weight="500">520,5 Mrd. €</text>
 
         <!-- ─ OUTPUT PATHS ─ -->
         <!-- Soziales ~38% wide path -->
@@ -586,45 +586,45 @@
         <!-- ─ OUTPUT BOXES ─ -->
         <!-- Soziales 197.4 → 38% → h 114 -->
         <g class="snode" onclick="switchTab('ausgaben')" aria-label="Soziales">
-          <rect x="724" y="55" width="160" height="114" rx="8" fill="#8b3020" opacity=".13" stroke="#8b3020" stroke-width="1" stroke-opacity=".4"/>
-          <text x="804" y="101" font-family="'DM Serif Display',serif" font-size="15" fill="#1a1814" text-anchor="middle" dominant-baseline="middle">Soziales</text>
-          <text x="804" y="119" font-family="'DM Mono',monospace" font-size="11" fill="#8b3020" text-anchor="middle" dominant-baseline="middle">197,4 Mrd. €</text>
-          <text x="804" y="135" font-family="'DM Mono',monospace" font-size="10" fill="#5a5650" text-anchor="middle" dominant-baseline="middle">Epl. 11 · 37,9 %</text>
+          <rect x="724" y="55" width="160" height="114" rx="8" fill="#8b3020" opacity=".85" stroke="#5a1e10" stroke-width="1.5" stroke-opacity="1"/>
+          <text x="804" y="101" font-family="'DM Serif Display',serif" font-size="16" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">Soziales</text>
+          <text x="804" y="119" font-family="'DM Mono',monospace" font-size="12" fill="#f5c0a8" text-anchor="middle" dominant-baseline="middle">197,4 Mrd. €</text>
+          <text x="804" y="136" font-family="'DM Mono',monospace" font-size="10" fill="#e8a090" text-anchor="middle" dominant-baseline="middle">Epl. 11 · 37,9 %</text>
         </g>
 
         <!-- Verteidigung 82.7 → 16% → h 55 -->
         <g class="snode" onclick="switchTab('ministerien')" aria-label="Verteidigung">
-          <rect x="724" y="179" width="160" height="55" rx="8" fill="#3d2e6e" opacity=".13" stroke="#3d2e6e" stroke-width="1" stroke-opacity=".4"/>
-          <text x="804" y="200" font-family="'DM Serif Display',serif" font-size="15" fill="#1a1814" text-anchor="middle" dominant-baseline="middle">Verteidigung</text>
-          <text x="804" y="218" font-family="'DM Mono',monospace" font-size="11" fill="#3d2e6e" text-anchor="middle" dominant-baseline="middle">82,7 Mrd. €</text>
+          <rect x="724" y="179" width="160" height="55" rx="8" fill="#3d2e6e" opacity=".85" stroke="#261c48" stroke-width="1.5" stroke-opacity="1"/>
+          <text x="804" y="200" font-family="'DM Serif Display',serif" font-size="15" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">Verteidigung</text>
+          <text x="804" y="218" font-family="'DM Mono',monospace" font-size="12" fill="#c0b0f0" text-anchor="middle" dominant-baseline="middle">82,7 Mrd. €</text>
         </g>
 
         <!-- Investitionen 56.1 → 11% → h 36 -->
         <g class="snode" onclick="switchTab('ausgaben')" aria-label="Investitionen">
-          <rect x="724" y="244" width="160" height="36" rx="8" fill="#0f5e48" opacity=".13" stroke="#0f5e48" stroke-width="1" stroke-opacity=".4"/>
-          <text x="804" y="260" font-family="'DM Serif Display',serif" font-size="13" fill="#1a1814" text-anchor="middle" dominant-baseline="middle">Investitionen</text>
-          <text x="804" y="274" font-family="'DM Mono',monospace" font-size="10" fill="#0f5e48" text-anchor="middle" dominant-baseline="middle">56,1 Mrd. €</text>
+          <rect x="724" y="244" width="160" height="36" rx="8" fill="#0f5e48" opacity=".85" stroke="#083c2e" stroke-width="1.5" stroke-opacity="1"/>
+          <text x="804" y="260" font-family="'DM Serif Display',serif" font-size="13" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">Investitionen</text>
+          <text x="804" y="274" font-family="'DM Mono',monospace" font-size="10" fill="#a0e0d0" text-anchor="middle" dominant-baseline="middle">56,1 Mrd. €</text>
         </g>
 
         <!-- Bundesschuld 34.1 → 6.5% → h 30 -->
         <g class="snode" onclick="switchTab('ausgaben')" aria-label="Bundesschuld">
-          <rect x="724" y="290" width="160" height="30" rx="8" fill="#5a5650" opacity=".13" stroke="#5a5650" stroke-width="1" stroke-opacity=".4"/>
-          <text x="804" y="307" font-family="'DM Mono',monospace" font-size="11" fill="#5a5650" text-anchor="middle" dominant-baseline="middle">Schulden · 34,1 Mrd.</text>
+          <rect x="724" y="290" width="160" height="30" rx="8" fill="#5a5650" opacity=".85" stroke="#3a3632" stroke-width="1.5" stroke-opacity="1"/>
+          <text x="804" y="307" font-family="'DM Mono',monospace" font-size="11" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">Schulden · 34,1 Mrd.</text>
         </g>
 
         <!-- Allg. Finanzverwaltung 46.1 → 9% → h 36 -->
         <g class="snode" onclick="switchTab('ausgaben')" aria-label="Finanzverwaltung">
-          <rect x="724" y="330" width="160" height="36" rx="8" fill="#8b5e0a" opacity=".13" stroke="#8b5e0a" stroke-width="1" stroke-opacity=".4"/>
-          <text x="804" y="346" font-family="'DM Mono',monospace" font-size="11" fill="#8b5e0a" text-anchor="middle" dominant-baseline="middle">Allg. Finanzverwaltung</text>
-          <text x="804" y="360" font-family="'DM Mono',monospace" font-size="10" fill="#5a5650" text-anchor="middle" dominant-baseline="middle">46,1 Mrd. €</text>
+          <rect x="724" y="330" width="160" height="36" rx="8" fill="#8b5e0a" opacity=".85" stroke="#5a3c06" stroke-width="1.5" stroke-opacity="1"/>
+          <text x="804" y="346" font-family="'DM Mono',monospace" font-size="11" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">Allg. Finanzverwaltung</text>
+          <text x="804" y="360" font-family="'DM Mono',monospace" font-size="10" fill="#f5d87a" text-anchor="middle" dominant-baseline="middle">46,1 Mrd. €</text>
         </g>
 
         <!-- Weitere Ministerien ~160 → h 58 -->
         <g class="snode" onclick="switchTab('ministerien')" aria-label="Weitere Ministerien">
-          <rect x="724" y="376" width="160" height="84" rx="8" fill="#1a3060" opacity=".13" stroke="#1a3060" stroke-width="1" stroke-opacity=".4"/>
-          <text x="804" y="410" font-family="'DM Serif Display',serif" font-size="15" fill="#1a1814" text-anchor="middle" dominant-baseline="middle">Weitere Ministerien</text>
-          <text x="804" y="428" font-family="'DM Mono',monospace" font-size="11" fill="#1a3060" text-anchor="middle" dominant-baseline="middle">~104,1 Mrd. €</text>
-          <text x="804" y="444" font-family="'DM Mono',monospace" font-size="10" fill="#5a5650" text-anchor="middle" dominant-baseline="middle">→ Tab Ministerien</text>
+          <rect x="724" y="376" width="160" height="84" rx="8" fill="#1a3060" opacity=".85" stroke="#0e1e40" stroke-width="1.5" stroke-opacity="1"/>
+          <text x="804" y="410" font-family="'DM Serif Display',serif" font-size="15" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">Weitere Ministerien</text>
+          <text x="804" y="428" font-family="'DM Mono',monospace" font-size="11" fill="#b0c8f0" text-anchor="middle" dominant-baseline="middle">~104,1 Mrd. €</text>
+          <text x="804" y="444" font-family="'DM Mono',monospace" font-size="10" fill="#8aacde" text-anchor="middle" dominant-baseline="middle">→ Tab Ministerien</text>
         </g>
 
         <!-- Hint -->
